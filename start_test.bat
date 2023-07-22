@@ -1,0 +1,1 @@
+pytest --disable-warnings -m "test" .\tests\test_reqres_api.py --host "https://reqres.in" -s -vv
