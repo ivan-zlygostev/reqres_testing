@@ -1,19 +1,8 @@
-from pytest_schema import And, Regex
+from schema_expected.versions.schema_api_ver_1 import expected_schemas as expected_schemas_ver1
+from schema_expected.versions.schema_api_ver_2 import expected_schemas as expected_schemas_ver2
 
 
-class ExpectedSchema:
-    # /users
-    users_list = {
-        'page': And(int, lambda n: n > 0),
-        'per_page': And(int, lambda n: n > 0),
-        'total': And(int, lambda n: n > 0),
-        'data': [
-            {
-                'id': int,
-                'email': Regex(r'.*?@.*?\.[A-Za-z]{2,6}'),
-                'first_name': str,
-                'last_name': str,
-                'avatar': str
-            }
-        ]
-    }
+api_versions_schema = {
+    'ver1': expected_schemas_ver1,
+    'ver2': expected_schemas_ver2
+}
