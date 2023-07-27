@@ -26,6 +26,10 @@ class ChecklistApi:
         self.status_code(status_code.CREATED)
         return self
 
+    def status_code_should_be_204(self):
+        self.status_code(status_code.NO_CONTENT)
+        return self
+
     def status_code_should_be_400(self):
         self.status_code(status_code.BAD_REQUEST)
         return self
@@ -75,7 +79,15 @@ class ChecklistApi:
         return self
 
     def body_should_be_json(self):
-        assert self.response.json(), 'Response body is not Json'
+        assert self.response.json(), f'Response body is not Json - {self.response.content}'
+        return self
+
+    def body_should_be_empty_json(self):
+        assert self.response.content == b'{}', f'Response body is not empty Json - {self.response.content}'
+        return self
+
+    def body_should_be_empty(self):
+        assert self.response.content == b'', f'Response body is not empty - {self.response.content}'
         return self
 
     def json_should_be_validate_schema(self, api_version: str, json_schema: str):
@@ -85,6 +97,10 @@ class ChecklistApi:
 
     def assert_response_value(self, expected_value):
         assert self.response == expected_value, f'expected value != actual result ({expected_value} != {self.response})'
+        return self
+
+    def assert_response_len(self, expected_len):
+        assert len(self.response) == expected_len, f'expected len != actual len ({expected_len} != {len(self.response)})'
         return self
 
     def assert_comparison_len(self, comparison_operator: str, length: int):
