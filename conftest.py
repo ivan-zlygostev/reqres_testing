@@ -108,7 +108,7 @@ def login(reqres_client, request):
     return res
 
 
-@pytest.fixture(scope='function')
+@pytest.fixture(scope='class')
 def go_to_site(pytestconfig, request):
     host = pytestconfig.getoption('host')
     driver_select = request.param
