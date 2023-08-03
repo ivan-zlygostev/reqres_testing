@@ -5,3 +5,4 @@ flake8-bugbear # Плагин для библиотеки flake8
 flake8_docstrings # Плагин для библиотеки flake8
 pytest==7.3.0 # Тестовый фреймворк
 requests~=2.30.0
+selenium==4.10.0

@@ -1,6 +1,11 @@
 from api.reqres_api import ReqresAPI
 
+from front.reqres_pages import ReqresBase
+
 import pytest
+
+
+from selenium import webdriver
 
 
 def pytest_addoption(parser):
@@ -101,3 +106,130 @@ def login(reqres_client, request):
     req_json = request.param
     res = reqres_client.login(json=req_json)
     return res
+
+
+@pytest.fixture(scope='function')
+def go_to_site(pytestconfig, request):
+    host = pytestconfig.getoption('host')
+    driver_select = request.param
+    if driver_select == 'Chrome':
+        options = webdriver.ChromeOptions()
+        options.add_argument('--headless')
+        options.add_argument('--incognito')
+        options.add_experimental_option('excludeSwitches', ['enable-logging'])
+        driver = webdriver.Chrome(options=options)
+    elif driver_select == 'Firefox':
+        options = webdriver.FirefoxOptions()
+        options.add_argument('--headless')
+        options.add_argument('--incognito')
+        driver = webdriver.Firefox(options=options)
+    driver.maximize_window()
+    reqres_main_page = ReqresBase(driver, host)
+    reqres_main_page.go_to_url()
+    yield reqres_main_page, driver
+    driver.quit()
+
+
+@pytest.fixture(scope='function')
+def click_list_users(go_to_site):
+    reqres_main_page, driver = go_to_site
+    reqres_main_page.click_list_users()
+    return reqres_main_page, driver
+
+
+@pytest.fixture(scope='function')
+def click_single_user(go_to_site):
+    reqres_main_page, driver = go_to_site
+    reqres_main_page.click_single_user()
+    return reqres_main_page, driver
+
+
+@pytest.fixture(scope='function')
+def click_single_user_not_found(go_to_site):
+    reqres_main_page, driver = go_to_site
+    reqres_main_page.click_single_user_not_found()
+    return reqres_main_page, driver
+
+
+@pytest.fixture(scope='function')
+def click_list_resource(go_to_site):
+    reqres_main_page, driver = go_to_site
+    reqres_main_page.click_list_resource()
+    return reqres_main_page, driver
+
+
+@pytest.fixture(scope='function')
+def click_single_resource(go_to_site):
+    reqres_main_page, driver = go_to_site
+    reqres_main_page.click_single_resource()
+    return reqres_main_page, driver
+
+
+@pytest.fixture(scope='function')
+def click_single_resource_not_found(go_to_site):
+    reqres_main_page, driver = go_to_site
+    reqres_main_page.click_single_resource_not_found()
+    return reqres_main_page, driver
+
+
+@pytest.fixture(scope='function')
+def click_create(go_to_site):
+    reqres_main_page, driver = go_to_site
+    reqres_main_page.click_create()
+    return reqres_main_page, driver
+
+
+@pytest.fixture(scope='function')
+def click_update_put(go_to_site):
+    reqres_main_page, driver = go_to_site
+    reqres_main_page.click_update_put()
+    return reqres_main_page, driver
+
+
+@pytest.fixture(scope='function')
+def click_update_patch(go_to_site):
+    reqres_main_page, driver = go_to_site
+    reqres_main_page.click_update_patch()
+    return reqres_main_page, driver
+
+
+@pytest.fixture(scope='function')
+def click_delete(go_to_site):
+    reqres_main_page, driver = go_to_site
+    reqres_main_page.click_delete()
+    return reqres_main_page, driver
+
+
+@pytest.fixture(scope='function')
+def click_register_successful(go_to_site):
+    reqres_main_page, driver = go_to_site
+    reqres_main_page.click_register_successful()
+    return reqres_main_page, driver
+
+
+@pytest.fixture(scope='function')
+def click_register_unsuccessful(go_to_site):
+    reqres_main_page, driver = go_to_site
+    reqres_main_page.click_register_unsuccessful()
+    return reqres_main_page, driver
+
+
+@pytest.fixture(scope='function')
+def click_login_successful(go_to_site):
+    reqres_main_page, driver = go_to_site
+    reqres_main_page.click_login_successful()
+    return reqres_main_page, driver
+
+
+@pytest.fixture(scope='function')
+def click_login_unsuccessful(go_to_site):
+    reqres_main_page, driver = go_to_site
+    reqres_main_page.click_login_unsuccessful()
+    return reqres_main_page, driver
+
+
+@pytest.fixture(scope='function')
+def click_list_users_delay(go_to_site):
+    reqres_main_page, driver = go_to_site
+    reqres_main_page.click_list_users_delay()
+    return reqres_main_page, driver
